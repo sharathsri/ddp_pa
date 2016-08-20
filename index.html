@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title></title>
+  <title>Confusion matrix is the key to choose a classification model</title>
   <meta charset="utf-8">
-  <meta name="description" content="">
+  <meta name="description" content="Confusion matrix is the key to choose a classification model">
   <meta name="author" content="">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -32,7 +32,7 @@
     <!-- LOGO SLIDE -->
         <slide class="title-slide segue nobackground">
   <hgroup class="auto-fadein">
-    <h1></h1>
+    <h1>Confusion matrix is the key to choose a classification model</h1>
     <h2></h2>
     <p><br/></p>
   </hgroup>
@@ -43,13 +43,13 @@
     <!-- SLIDES -->
     <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>Read-And-Delete</h2>
+    <h2>Confusion matrix</h2>
   </hgroup>
   <article data-timings="">
     <ol>
-<li>Edit YAML front matter</li>
-<li>Write using R Markdown</li>
-<li>Use an empty line followed by three dashes to separate slides!</li>
+<li>Confusion matrix is a table to represent the performance of a classifier.</li>
+<li>Maximum values in the diagonal of the table indicates a good classifier.</li>
+<li>Confusion Matrix in R also outputs classifier parameters like accuracy, p-value, etc </li>
 </ol>
 
   </article>
@@ -58,10 +58,59 @@
 
 <slide class="class" id="id" style="background:;">
   <hgroup>
-    <h2>Slide 2</h2>
+    <h2>Diamonds data-set &amp; lda classifier</h2>
   </hgroup>
   <article data-timings="">
-    
+    <ol>
+<li>Diamonds dataset contains price and other attributes of 54,000 diamonds.</li>
+<li>20% of the data is chosen for testing the classifier.</li>
+<li>&#39;cut&#39;, &#39;color&#39; and &#39;clarity&#39; are factor variables.</li>
+<li>Using lda classifier we will predict &#39;cut&#39;, &#39;color&#39; and &#39;clarity&#39; from all other numeric variables.</li>
+<li>We will infer performance by understanding the confusion matrix of the classifier.</li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>R code to build a classifier</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">library(ggplot2)
+library(caret)
+dataset&lt;-diamonds[ ,-c(3,4)]
+inTrain &lt;- createDataPartition(y=dataset$cut,
+                              p=0.80, list=FALSE)
+training &lt;- dataset[inTrain,]
+testing &lt;- dataset[-inTrain,]
+ldaModFit &lt;- train(cut ~.,data=training, method=&quot;lda&quot;)
+
+pred1 &lt;- predict(ldaModFit,newdata=testing)
+tbl&lt;-confusionMatrix(pred1,testing$cut)$table
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Example output</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Confusion Matrix of &#39;cut&#39; value prediction using lda:</p>
+
+<pre><code>##            Reference
+## Prediction  Fair Good Very Good Premium Ideal
+##   Fair       187  110        31      11     6
+##   Good        20  137        93      18     0
+##   Very Good   17  198       626     362   107
+##   Premium     50  277       640    1782   168
+##   Ideal       48  259      1026     585  4029
+</code></pre>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -72,14 +121,26 @@
     <ul>
       <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=1 title='Read-And-Delete'>
+        data-slide=1 title='Confusion matrix'>
          1
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=2 title='Slide 2'>
+        data-slide=2 title='Diamonds data-set &amp; lda classifier'>
          2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='R code to build a classifier'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Example output'>
+         4
       </a>
     </li>
   </ul>
